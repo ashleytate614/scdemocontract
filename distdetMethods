@@ -1,0 +1,275 @@
+"createAssetDistributionDetail": {
+                "type": "object",
+                "description": "Creates a new DistributionDetail (e.g. put new)",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "createAssetDistributionDetail"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "distributionDetail": {
+                                    "$ref": "#/definitions/Model/distributionDetail"
+                                }
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "replaceAssetDistributionDetail": {
+                "type": "object",
+                "description": "Replaces a DistributionDetail's state (e.g. put existing)",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "replaceAssetDistributionDetail"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "distributionDetail": {
+                                    "$ref": "#/definitions/Model/distributionDetail"
+                                }
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "updateAssetDistributionDetail": {
+                "type": "object",
+                "description": "Update a contaner's state with one or more property changes (e.g. patch existing)",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "updateAssetDistributionDetail"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "distributionDetail": {
+                                    "$ref": "#/definitions/Model/distributionDetail"
+                                }
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "deleteAssetDistributionDetail": {
+                "type": "object",
+                "description": "Delete a distributionDetail from world state, transactions remain on the blockchain",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "deleteAssetDistributionDetail"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/distributionDetailKey"
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "deleteAssetStateHistoryDistributionDetail": {
+                "type": "object",
+                "description": "Delete a distributionDetail's history from world state, transactions remain on the blockchain",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "deleteAssetStateHistoryDistributionDetail"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/distributionDetailKey"
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "deletePropertiesFromAssetDistributionDetail": {
+                "type": "object",
+                "description": "Delete one or more properties from a distributionDetail's state, an example being temperature, which is only relevant for sensitive (as in frozen) shipments",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "deletePropertiesFromAssetDistributionDetail"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/distributionDetailKey",
+                                "qprops": {
+                                    "type": "array",
+                                    "description": "Qualified property names, e.g. distributionDetail.distributionDetailId",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "deleteAllAssetsDistributionDetail": {
+                "type": "object",
+                "description": "Delete all distributionDetails from world state, supports filters",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "deleteAllAssetsDistributionDetail"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "filter": {
+                                    "$ref": "#/definitions/Model/stateFilter"
+                                }
+                            }
+                        },
+                        "minItems": 0,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "readAssetDistributionDetail": {
+                "type": "object",
+                "description": "Returns the state a distributionDetail",
+                "properties": {
+                    "method": "query",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "readAssetDistributionDetail"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/distributionDetailKey"
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    },
+                    "result": {
+                        "$ref": "#/definitions/Model/distributionDetailstate"
+                    }
+                }
+            },
+            "readAllAssetsDistributionDetail": {
+                "type": "object",
+                "description": "Returns the state of all distributionDetails, supports filters",
+                "properties": {
+                    "method": "query",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "readAllAssetsDistributionDetail"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "filter": {
+                                    "$ref": "#/definitions/Model/stateFilter"
+                                }
+                            }
+                        },
+                        "minItems": 0,
+                        "maxItems": 1
+                    },
+                    "result": {
+                        "$ref": "#/definitions/Model/distributionDetailstatearray"
+                    }
+                }
+            },
+            "readAssetStateHistoryDistributionDetail": {
+                "type": "object",
+                "description": "Returns history states for a distributionDetail",
+                "properties": {
+                    "method": "query",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "readAssetStateHistoryDistributionDetail"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/distributionDetailKey",
+                                "daterange": {
+                                    "$ref": "#/definitions/Model/dateRange"
+                                },
+                                "filter": {
+                                    "$ref": "#/definitions/Model/stateFilter"
+                                }
+                            },
+                            "required": [
+                                "distributionDetail"
+                            ]
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    },
+                    "result": {
+                        "$ref": "#/definitions/Model/distributionDetailstatearray"
+                    }
+                }
+            },

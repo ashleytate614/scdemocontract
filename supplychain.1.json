@@ -1,0 +1,2729 @@
+{
+    "id": "https://github.com/ibm-watson-iot/blockchain-samples/contracts/platform/iotcontractminimalsample/minimal.json",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "API": {
+            "$ref": "github.com/hyperledger/fabric/examples/chaincode/go/iotcontractplatform/schema/IOTCPschema.json/#definitions/API",
+            "createAssetSupply": {
+                "type": "object",
+                "description": "Creates a new Supply (e.g. put new)",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "createAssetSupply"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "supply": {
+                                    "$ref": "#/definitions/Model/supply"
+                                }
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "replaceAssetSupply": {
+                "type": "object",
+                "description": "Replaces a Supply's state (e.g. put existing)",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "replaceAssetSupply"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "supply": {
+                                    "$ref": "#/definitions/Model/supply"
+                                }
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "updateAssetSupply": {
+                "type": "object",
+                "description": "Update a contaner's state with one or more property changes (e.g. patch existing)",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "updateAssetSupply"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "supply": {
+                                    "$ref": "#/definitions/Model/supply"
+                                }
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "deleteAssetSupply": {
+                "type": "object",
+                "description": "Delete a supply from world state, transactions remain on the blockchain",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "deleteAssetSupply"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/supplyKey"
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "deleteAssetStateHistorySupply": {
+                "type": "object",
+                "description": "Delete a supply's history from world state, transactions remain on the blockchain",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "deleteAssetStateHistorySupply"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/supplyKey"
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "deletePropertiesFromAssetSupply": {
+                "type": "object",
+                "description": "Delete one or more properties from a supply's state, an example being temperature, which is only relevant for sensitive (as in frozen) shipments",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "deletePropertiesFromAssetSupply"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/supplyKey",
+                                "qprops": {
+                                    "type": "array",
+                                    "description": "Qualified property names, e.g. supply.supplyId",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "deleteAllAssetsSupply": {
+                "type": "object",
+                "description": "Delete all supplys from world state, supports filters",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "deleteAllAssetsSupply"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "filter": {
+                                    "$ref": "#/definitions/Model/stateFilter"
+                                }
+                            }
+                        },
+                        "minItems": 0,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "readAssetSupply": {
+                "type": "object",
+                "description": "Returns the state a supply",
+                "properties": {
+                    "method": "query",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "readAssetSupply"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/supplyKey"
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    },
+                    "result": {
+                        "$ref": "#/definitions/Model/supplystate"
+                    }
+                }
+            },
+            "readAllAssetsSupply": {
+                "type": "object",
+                "description": "Returns the state of all supplys, supports filters",
+                "properties": {
+                    "method": "query",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "readAllAssetsSupply"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "filter": {
+                                    "$ref": "#/definitions/Model/stateFilter"
+                                }
+                            }
+                        },
+                        "minItems": 0,
+                        "maxItems": 1
+                    },
+                    "result": {
+                        "$ref": "#/definitions/Model/supplystatearray"
+                    }
+                }
+            },
+            "readAssetStateHistorySupply": {
+                "type": "object",
+                "description": "Returns history states for a supply",
+                "properties": {
+                    "method": "query",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "readAssetStateHistorySupply"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/supplyKey",
+                                "daterange": {
+                                    "$ref": "#/definitions/Model/dateRange"
+                                },
+                                "filter": {
+                                    "$ref": "#/definitions/Model/stateFilter"
+                                }
+                            },
+                            "required": [
+                                "supply"
+                            ]
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    },
+                    "result": {
+                        "$ref": "#/definitions/Model/supplystatearray"
+                    }
+                }
+            },
+            "createAssetProduct": {
+                "type": "object",
+                "description": "Creates a new Product (e.g. put new)",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "createAssetProduct"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "product": {
+                                    "$ref": "#/definitions/Model/product"
+                                }
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "replaceAssetProduct": {
+                "type": "object",
+                "description": "Replaces a Product's state (e.g. put existing)",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "replaceAssetProduct"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "product": {
+                                    "$ref": "#/definitions/Model/product"
+                                }
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "updateAssetProduct": {
+                "type": "object",
+                "description": "Update a contaner's state with one or more property changes (e.g. patch existing)",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "updateAssetProduct"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "product": {
+                                    "$ref": "#/definitions/Model/product"
+                                }
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "deleteAssetProduct": {
+                "type": "object",
+                "description": "Delete a product from world state, transactions remain on the blockchain",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "deleteAssetProduct"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/productKey"
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "deleteAssetStateHistoryProduct": {
+                "type": "object",
+                "description": "Delete a product's history from world state, transactions remain on the blockchain",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "deleteAssetStateHistoryProduct"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/productKey"
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "deletePropertiesFromAssetProduct": {
+                "type": "object",
+                "description": "Delete one or more properties from a product's state, an example being temperature, which is only relevant for sensitive (as in frozen) shipments",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "deletePropertiesFromAssetProduct"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/productKey",
+                                "qprops": {
+                                    "type": "array",
+                                    "description": "Qualified property names, e.g. product.productId",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "deleteAllAssetsProduct": {
+                "type": "object",
+                "description": "Delete all products from world state, supports filters",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "deleteAllAssetsProduct"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "filter": {
+                                    "$ref": "#/definitions/Model/stateFilter"
+                                }
+                            }
+                        },
+                        "minItems": 0,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "readAssetProduct": {
+                "type": "object",
+                "description": "Returns the state a product",
+                "properties": {
+                    "method": "query",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "readAssetProduct"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/productKey"
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    },
+                    "result": {
+                        "$ref": "#/definitions/Model/productstate"
+                    }
+                }
+            },
+            "readAllAssetsProduct": {
+                "type": "object",
+                "description": "Returns the state of all products, supports filters",
+                "properties": {
+                    "method": "query",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "readAllAssetsProduct"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "filter": {
+                                    "$ref": "#/definitions/Model/stateFilter"
+                                }
+                            }
+                        },
+                        "minItems": 0,
+                        "maxItems": 1
+                    },
+                    "result": {
+                        "$ref": "#/definitions/Model/productstatearray"
+                    }
+                }
+            },
+            "readAssetStateHistoryProduct": {
+                "type": "object",
+                "description": "Returns history states for a product",
+                "properties": {
+                    "method": "query",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "readAssetStateHistoryProduct"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/productKey",
+                                "daterange": {
+                                    "$ref": "#/definitions/Model/dateRange"
+                                },
+                                "filter": {
+                                    "$ref": "#/definitions/Model/stateFilter"
+                                }
+                            },
+                            "required": [
+                                "product"
+                            ]
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    },
+                    "result": {
+                        "$ref": "#/definitions/Model/productstatearray"
+                    }
+                }
+            },
+            "createAssetOrder": {
+                "type": "object",
+                "description": "Creates a new Order (e.g. put new)",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "createAssetOrder"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "order": {
+                                    "$ref": "#/definitions/Model/order"
+                                }
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "replaceAssetOrder": {
+                "type": "object",
+                "description": "Replaces a Order's state (e.g. put existing)",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "replaceAssetOrder"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "order": {
+                                    "$ref": "#/definitions/Model/order"
+                                }
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "updateAssetOrder": {
+                "type": "object",
+                "description": "Update a contaner's state with one or more property changes (e.g. patch existing)",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "updateAssetOrder"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "order": {
+                                    "$ref": "#/definitions/Model/order"
+                                }
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "deleteAssetOrder": {
+                "type": "object",
+                "description": "Delete a order from world state, transactions remain on the blockchain",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "deleteAssetOrder"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/orderKey"
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "deleteAssetStateHistoryOrder": {
+                "type": "object",
+                "description": "Delete a order's history from world state, transactions remain on the blockchain",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "deleteAssetStateHistoryOrder"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/orderKey"
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "deletePropertiesFromAssetOrder": {
+                "type": "object",
+                "description": "Delete one or more properties from a order's state, an example being temperature, which is only relevant for sensitive (as in frozen) shipments",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "deletePropertiesFromAssetOrder"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/orderKey",
+                                "qprops": {
+                                    "type": "array",
+                                    "description": "Qualified property names, e.g. order.orderId",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "deleteAllAssetsOrder": {
+                "type": "object",
+                "description": "Delete all orders from world state, supports filters",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "deleteAllAssetsOrder"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "filter": {
+                                    "$ref": "#/definitions/Model/stateFilter"
+                                }
+                            }
+                        },
+                        "minItems": 0,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "readAssetOrder": {
+                "type": "object",
+                "description": "Returns the state a order",
+                "properties": {
+                    "method": "query",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "readAssetOrder"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/orderKey"
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    },
+                    "result": {
+                        "$ref": "#/definitions/Model/orderstate"
+                    }
+                }
+            },
+            "readAllAssetsOrder": {
+                "type": "object",
+                "description": "Returns the state of all orders, supports filters",
+                "properties": {
+                    "method": "query",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "readAllAssetsOrder"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "filter": {
+                                    "$ref": "#/definitions/Model/stateFilter"
+                                }
+                            }
+                        },
+                        "minItems": 0,
+                        "maxItems": 1
+                    },
+                    "result": {
+                        "$ref": "#/definitions/Model/orderstatearray"
+                    }
+                }
+            },
+            "readAssetStateHistoryOrder": {
+                "type": "object",
+                "description": "Returns history states for a order",
+                "properties": {
+                    "method": "query",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "readAssetStateHistoryOrder"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/orderKey",
+                                "daterange": {
+                                    "$ref": "#/definitions/Model/dateRange"
+                                },
+                                "filter": {
+                                    "$ref": "#/definitions/Model/stateFilter"
+                                }
+                            },
+                            "required": [
+                                "order"
+                            ]
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    },
+                    "result": {
+                        "$ref": "#/definitions/Model/orderstatearray"
+                    }
+                }
+            },
+            "createParticipantSupplier": {
+                "type": "object",
+                "description": "Creates a new supplier (e.g. put new)",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "createParticipantSupplier"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "supplier": {
+                                    "$ref": "#/definitions/Model/supplier"
+                                }
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "replaceParticipantSupplier": {
+                "type": "object",
+                "description": "Replaces a supplier's state (e.g. put existing)",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "replaceParticipantSupplier"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "supplier": {
+                                    "$ref": "#/definitions/Model/supplier"
+                                }
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "updateParticipantSupplier": {
+                "type": "object",
+                "description": "Update a contaner's state with one or more property changes (e.g. patch existing)",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "updateParticipantSupplier"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "supplier": {
+                                    "$ref": "#/definitions/Model/supplier"
+                                }
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "deleteParticipantSupplier": {
+                "type": "object",
+                "description": "Delete a supplier from world state, transactions remain on the blockchain",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "deleteParticipantSupplier"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/supplierKey"
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "deleteParticipantStateHistorySupplier": {
+                "type": "object",
+                "description": "Delete a supplier's history from world state, transactions remain on the blockchain",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "deleteParticipantStateHistorySupplier"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/supplierKey"
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "deletePropertiesFromParticipantSupplier": {
+                "type": "object",
+                "description": "Delete one or more properties from a supplier's state, an example being temperature, which is only relevant for sensitive (as in frozen) shipments",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "deletePropertiesFromParticipantSupplier"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/supplierKey",
+                                "qprops": {
+                                    "type": "array",
+                                    "description": "Qualified property names, e.g. supplier.barcode",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "deleteAllParticipantsSupplier": {
+                "type": "object",
+                "description": "Delete all suppliers from world state, supports filters",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "deleteAllParticipantsSupplier"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "filter": {
+                                    "$ref": "#/definitions/Model/stateFilter"
+                                }
+                            }
+                        },
+                        "minItems": 0,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "readParticipantSupplier": {
+                "type": "object",
+                "description": "Returns the state a supplier",
+                "properties": {
+                    "method": "query",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "readParticipantSupplier"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/supplierKey"
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    },
+                    "result": {
+                        "$ref": "#/definitions/Model/supplierstate"
+                    }
+                }
+            },
+            "readAllParticipantsSupplier": {
+                "type": "object",
+                "description": "Returns the state of all suppliers, supports filters",
+                "properties": {
+                    "method": "query",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "readAllParticipantsSupplier"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "filter": {
+                                    "$ref": "#/definitions/Model/stateFilter"
+                                }
+                            }
+                        },
+                        "minItems": 0,
+                        "maxItems": 1
+                    },
+                    "result": {
+                        "$ref": "#/definitions/Model/supplierstatearray"
+                    }
+                }
+            },
+            "readParticipantStateHistorySupplier": {
+                "type": "object",
+                "description": "Returns history states for a supplier",
+                "properties": {
+                    "method": "query",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "readParticipantStateHistorySupplier"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/supplierKey",
+                                "daterange": {
+                                    "$ref": "#/definitions/Model/dateRange"
+                                },
+                                "filter": {
+                                    "$ref": "#/definitions/Model/stateFilter"
+                                }
+                            },
+                            "required": [
+                                "supplier"
+                            ]
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    },
+                    "result": {
+                        "$ref": "#/definitions/Model/supplierstatearray"
+                    }
+                }
+            },
+                         "createParticipantMaker": {
+                    "type": "object",
+                    "description": "Creates a new maker (e.g. put new)",
+                    "properties": {
+                        "method": "invoke",
+                        "function": {
+                            "type": "string",
+                            "enum": [
+                                "createParticipantMaker"
+                            ]
+                        },
+                        "args": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "maker": {
+                                        "$ref": "#/definitions/Model/maker"
+                                    }
+                                }
+                            },
+                            "minItems": 1,
+                            "maxItems": 1
+                        }
+                    }
+                },
+                "replaceParticipantMaker": {
+                    "type": "object",
+                    "description": "Replaces a maker's state (e.g. put existing)",
+                    "properties": {
+                        "method": "invoke",
+                        "function": {
+                            "type": "string",
+                            "enum": [
+                                "replaceParticipantMaker"
+                            ]
+                        },
+                        "args": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "maker": {
+                                        "$ref": "#/definitions/Model/maker"
+                                    }
+                                }
+                            },
+                            "minItems": 1,
+                            "maxItems": 1
+                        }
+                    }
+                },
+                "updateParticipantMaker": {
+                    "type": "object",
+                    "description": "Update a contaner's state with one or more property changes (e.g. patch existing)",
+                    "properties": {
+                        "method": "invoke",
+                        "function": {
+                            "type": "string",
+                            "enum": [
+                                "updateParticipantMaker"
+                            ]
+                        },
+                        "args": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "maker": {
+                                        "$ref": "#/definitions/Model/maker"
+                                    }
+                                }
+                            },
+                            "minItems": 1,
+                            "maxItems": 1
+                        }
+                    }
+                },
+                "deleteParticipantMaker": {
+                    "type": "object",
+                    "description": "Delete a maker from world state, transactions remain on the blockchain",
+                    "properties": {
+                        "method": "invoke",
+                        "function": {
+                            "type": "string",
+                            "enum": [
+                                "deleteParticipantMaker"
+                            ]
+                        },
+                        "args": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "$ref": "#/definitions/Model/makerKey"
+                                }
+                            },
+                            "minItems": 1,
+                            "maxItems": 1
+                        }
+                    }
+                },
+                "deleteParticipantStateHistoryMaker": {
+                    "type": "object",
+                    "description": "Delete a maker's history from world state, transactions remain on the blockchain",
+                    "properties": {
+                        "method": "invoke",
+                        "function": {
+                            "type": "string",
+                            "enum": [
+                                "deleteParticipantStateHistoryMaker"
+                            ]
+                        },
+                        "args": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "$ref": "#/definitions/Model/makerKey"
+                                }
+                            },
+                            "minItems": 1,
+                            "maxItems": 1
+                        }
+                    }
+                },
+                "deletePropertiesFromParticipantMaker": {
+                    "type": "object",
+                    "description": "Delete one or more properties from a maker's state, an example being temperature, which is only relevant for sensitive (as in frozen) shipments",
+                    "properties": {
+                        "method": "invoke",
+                        "function": {
+                            "type": "string",
+                            "enum": [
+                                "deletePropertiesFromParticipantMaker"
+                            ]
+                        },
+                        "args": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "$ref": "#/definitions/Model/makerKey",
+                                    "qprops": {
+                                        "type": "array",
+                                        "description": "Qualified property names, e.g. maker.barcode",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "minItems": 1,
+                            "maxItems": 1
+                        }
+                    }
+                },
+                "deleteAllParticipantsMaker": {
+                    "type": "object",
+                    "description": "Delete all makers from world state, supports filters",
+                    "properties": {
+                        "method": "invoke",
+                        "function": {
+                            "type": "string",
+                            "enum": [
+                                "deleteAllParticipantsMaker"
+                            ]
+                        },
+                        "args": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "filter": {
+                                        "$ref": "#/definitions/Model/stateFilter"
+                                    }
+                                }
+                            },
+                            "minItems": 0,
+                            "maxItems": 1
+                        }
+                    }
+                },
+                "readParticipantMaker": {
+                    "type": "object",
+                    "description": "Returns the state a maker",
+                    "properties": {
+                        "method": "query",
+                        "function": {
+                            "type": "string",
+                            "enum": [
+                                "readParticipantMaker"
+                            ]
+                        },
+                        "args": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "$ref": "#/definitions/Model/makerKey"
+                                }
+                            },
+                            "minItems": 1,
+                            "maxItems": 1
+                        },
+                        "result": {
+                            "$ref": "#/definitions/Model/makerstate"
+                        }
+                    }
+                },
+                "readAllParticipantsMaker": {
+                    "type": "object",
+                    "description": "Returns the state of all makers, supports filters",
+                    "properties": {
+                        "method": "query",
+                        "function": {
+                            "type": "string",
+                            "enum": [
+                                "readAllParticipantsMaker"
+                            ]
+                        },
+                        "args": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "filter": {
+                                        "$ref": "#/definitions/Model/stateFilter"
+                                    }
+                                }
+                            },
+                            "minItems": 0,
+                            "maxItems": 1
+                        },
+                        "result": {
+                            "$ref": "#/definitions/Model/makerstatearray"
+                        }
+                    }
+                },
+                "readParticipantStateHistoryMaker": {
+                    "type": "object",
+                    "description": "Returns history states for a maker",
+                    "properties": {
+                        "method": "query",
+                        "function": {
+                            "type": "string",
+                            "enum": [
+                                "readParticipantStateHistoryMaker"
+                            ]
+                        },
+                        "args": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "$ref": "#/definitions/Model/makerKey",
+                                    "daterange": {
+                                        "$ref": "#/definitions/Model/dateRange"
+                                    },
+                                    "filter": {
+                                        "$ref": "#/definitions/Model/stateFilter"
+                                    }
+                                },
+                                "required": [
+                                    "maker"
+                                ]
+                            },
+                            "minItems": 1,
+                            "maxItems": 1
+                        },
+                        "result": {
+                            "$ref": "#/definitions/Model/makerstatearray"
+                        }
+                    }
+                },
+            "createParticipantSeller": {
+                "type": "object",
+                "description": "Creates a new seller (e.g. put new)",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "createParticipantSeller"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "seller": {
+                                    "$ref": "#/definitions/Model/seller"
+                                }
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "replaceParticipantSeller": {
+                "type": "object",
+                "description": "Replaces a seller's state (e.g. put existing)",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "replaceParticipantSeller"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "seller": {
+                                    "$ref": "#/definitions/Model/seller"
+                                }
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "updateParticipantSeller": {
+                "type": "object",
+                "description": "Update a contaner's state with one or more property changes (e.g. patch existing)",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "updateParticipantSeller"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "seller": {
+                                    "$ref": "#/definitions/Model/seller"
+                                }
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "deleteParticipantSeller": {
+                "type": "object",
+                "description": "Delete a seller from world state, transactions remain on the blockchain",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "deleteParticipantSeller"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/sellerKey"
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "deleteParticipantStateHistorySeller": {
+                "type": "object",
+                "description": "Delete a seller's history from world state, transactions remain on the blockchain",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "deleteParticipantStateHistorySeller"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/sellerKey"
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "deletePropertiesFromParticipantSeller": {
+                "type": "object",
+                "description": "Delete one or more properties from a seller's state, an example being temperature, which is only relevant for sensitive (as in frozen) shipments",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "deletePropertiesFromParticipantSeller"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/sellerKey",
+                                "qprops": {
+                                    "type": "array",
+                                    "description": "Qualified property names, e.g. seller.barcode",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "deleteAllParticipantsSeller": {
+                "type": "object",
+                "description": "Delete all sellers from world state, supports filters",
+                "properties": {
+                    "method": "invoke",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "deleteAllParticipantsSeller"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "filter": {
+                                    "$ref": "#/definitions/Model/stateFilter"
+                                }
+                            }
+                        },
+                        "minItems": 0,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "readParticipantSeller": {
+                "type": "object",
+                "description": "Returns the state a seller",
+                "properties": {
+                    "method": "query",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "readParticipantSeller"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/sellerKey"
+                            }
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    },
+                    "result": {
+                        "$ref": "#/definitions/Model/sellerstate"
+                    }
+                }
+            },
+            "readAllParticipantsSeller": {
+                "type": "object",
+                "description": "Returns the state of all sellers, supports filters",
+                "properties": {
+                    "method": "query",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "readAllParticipantsSeller"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "filter": {
+                                    "$ref": "#/definitions/Model/stateFilter"
+                                }
+                            }
+                        },
+                        "minItems": 0,
+                        "maxItems": 1
+                    },
+                    "result": {
+                        "$ref": "#/definitions/Model/sellerstatearray"
+                    }
+                }
+            },
+            "readParticipantStateHistorySeller": {
+                "type": "object",
+                "description": "Returns history states for a seller",
+                "properties": {
+                    "method": "query",
+                    "function": {
+                        "type": "string",
+                        "enum": [
+                            "readParticipantStateHistorySeller"
+                        ]
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/sellerKey",
+                                "daterange": {
+                                    "$ref": "#/definitions/Model/dateRange"
+                                },
+                                "filter": {
+                                    "$ref": "#/definitions/Model/stateFilter"
+                                }
+                            },
+                            "required": [
+                                "seller"
+                            ]
+                        },
+                        "minItems": 1,
+                        "maxItems": 1
+                    },
+                    "result": {
+                        "$ref": "#/definitions/Model/sellerstatearray"
+                    }
+                }
+            }  
+        },
+        "Model": {
+            "$ref": "github.com/hyperledger/fabric/examples/chaincode/go/iotcontractplatform/schema/IOTCPschema.json/#definitions/Model",
+            "supplyId": {
+                "type": "string",
+                "description": "A supply's ID"
+            },
+            "supply": {
+                "type": "object",
+                "description": "The changeable properties for a supply, also considered its 'event' as a partial state",
+                "properties": {
+                    "common": {
+                        "$ref": "#/definitions/Model/ioteventcommon"
+                    },
+                    "supplyId": {
+                        "$ref": "#/definitions/Model/supplyId"
+                    },
+                    "makerproductId": {
+                        "$ref": "#/definitions/Model/productId"
+                    },
+                    "orderId": {
+                        "$ref": "#/definitions/Model/orderId"
+                    },
+                    "supplyType": {
+                        "type": "string",
+                        "description": "eg.LightingCircuits, EngineSubasembly etc "
+                    },
+                     "supplyBatchId": {
+                        "type": "string",
+                        "description": "Supplier's production batch under which this supply falls"
+                   },
+                    "industryType": {
+                        "type": "string",
+                        "description": "Industry type - to start with Auto / Pharma / Food"
+                   },
+                   "supplyAggregationLevel": {
+                        "type": "string",
+                        "description": "Supply type - RawMaterial / Component / Operational"
+                   },
+                   "supplyStatus": {
+                        "type": "string",
+                        "description": "The current status of the supply"
+                   },
+                   "supplyDescription": {
+                        "type": "string",
+                        "description": "Description about the supply"
+                   },
+                   "supplyCount": {
+                        "type": "number",
+                        "description": "Number of assets"
+                   },
+                   "supplyAvailableDate": {
+                        "type": "string",
+                        "description": "Date of manufacture"
+                   },
+                   "shippedDate": {
+                        "type": "string",
+                        "description": "Date of shipment to maker"
+                   },
+                   "supplierId": {
+                        "$ref": "#/definitions/Model/supplierId"
+                    },
+                   "makerId": {
+                        "$ref": "#/definitions/Model/makerId"
+                   }
+                },
+                "required": [
+                    "supplyId",
+                    "industryType"
+                ]
+            },
+            "supplyKey": {
+                "supply": {
+                    "type": "object",
+                    "properties": {
+                        "supplyId": {
+                            "$ref": "#/definitions/Model/supplyId"
+                        }
+                    }
+                }
+            },
+            "supplystate": {
+                "type": "object",
+                "description": "A supply's complete state",
+                "properties": {
+                    "class": {
+                        "type": "string",
+                        "description": "The supply's asset class"
+                    },
+                    "prefix": {
+                        "type": "string",
+                        "description": "The supply's asset class prefix in world state"
+                    },
+                    "assetIDpath": {
+                        "type": "string",
+                        "description": "Qualified property path to the supply's ID, declared in the contract code"
+                    },
+                    "AssetKey": {
+                        "type": "string",
+                        "description": "This supply's world state supply ID"
+                    },
+                    "state": {
+                        "type": "object",
+                        "description": "Properties that have been received or calculated for this supply",
+                        "properties": {
+                            "supply": {
+                                "$ref": "#/definitions/Model/supply"
+                            }
+                        }
+                    },
+                    "eventin": {
+                        "type": "object",
+                        "description": "The contract event that created this state, for example updateAssetContainer",
+                        "properties": {
+                            "supply": {
+                                "$ref": "#/definitions/Model/supply"
+                            }
+                        }
+                    },
+                    "txnts": {
+                        "type": "string",
+                        "description": "Transaction timestamp matching the blockchain"
+                    },
+                    "txnid": {
+                        "type": "string",
+                        "description": "Transaction UUID matching the blockchain"
+                    },
+                    "eventout": {
+                        "type": "object",
+                        "description": "The chaincode event emitted on invoke exit, if any",
+                        "properties": {
+                            "supply": {
+                                "$ref": "#/definitions/Model/eventIOTContractPlatformInvokeResult"
+                            }
+                        }
+                    },
+                    "alerts": {
+                        "$ref": "#/definitions/Model/alertNameArray"
+                    },
+                    "compliant": {
+                        "type": "boolean",
+                        "description": "This supply has no active alerts"
+                    }
+                }
+            },
+            "supplystateexternal": {
+                "type": "object",
+                "patternProperties": {
+                    "^SUP": {
+                        "type": "object",
+                        "description": "The external state of one supply asset, named by its world state ID",
+                        "$ref": "#/definitions/Model/supplystate"
+                    }
+                }
+            },
+            "supplystatearray": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/definitions/Model/supplystateexternal"
+                },
+                "minItems": 0,
+                "description": "Array of supply states, can mix asset classes"
+            },
+            "productId": {
+                "type": "string",
+                "description": "A product's ID"
+            },
+            "product": {
+                "type": "object",
+                "description": "The changeable properties for a product, also considered its 'event' as a partial state",
+                "properties": {
+                    "common": {
+                        "$ref": "#/definitions/Model/ioteventcommon"
+                    },
+                    "productId": {
+                        "$ref": "#/definitions/Model/productId"
+                    },
+                    "productInternalId": {
+                        "type": "string",
+                        "description": "A product's Internal ID"
+                    },
+                    "orderId": {
+                        "$ref": "#/definitions/Model/orderId"
+                    },
+                    "productModel": {
+                        "type": "string",
+                        "description": "Product Model"
+                    },
+                    "productBatchId": {
+                        "type": "string",
+                        "description": "Batch id to which the product belongs"
+                    },
+                    "industryType": {
+                        "type": "string",
+                        "description": "Industry type - to start with Auto / Pharma / Food"
+                    },
+                    "productType": {
+                        "type": "string",
+                        "description": "FP(FinishedProduct/Subassembly"
+                   },
+                    "productStatus": {
+                        "type": "string",
+                        "description": "The current status of the product"
+                    },
+                    "productDescription": {
+                        "type": "string",
+                        "description": "Description of the finished product"
+                    },
+                    "productuctionLocation": {
+                        "$ref": "#/definitions/Model/geo"
+                    },
+                    "manufacturingDate": {
+                        "type": "string",
+                        "description": "Date of Manufacturing"
+                    },
+                   "makerId": {
+                        "$ref": "#/definitions/Model/makerId"
+                    },
+                   "sellerId": {
+                        "$ref": "#/definitions/Model/sellerId"
+                    },
+                    "madeOf": {
+                         "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "assetType": {
+                                    "type": "string",
+                                    "description": "Is this a product(subassembly) or a supply asset"
+                                },
+                                "assetBatchId": {
+                                    "type": "string",
+                                    "description": "Batch Id of supply / productModelId of product"
+                                },
+                                "assetCount": {
+                                    "type": "number",
+                                    "description": "Number of items in the product"
+                                },
+                                "assetIds": {
+                                    "type": "string",
+                                    "description": "Comma separated list of actual supplies"
+                                },
+                                "assetDescription": {
+                                    "type": "string",
+                                    "description": "Description of the supply/supplies"
+                                }
+                            }
+                        },
+                        "minItems": 1
+                    }
+                },
+                "required": [
+                    "productId",
+                    "industryType"
+                ]
+            },
+            "productKey": {
+                "product": {
+                    "type": "object",
+                    "properties": {
+                        "productId": {
+                            "$ref": "#/definitions/Model/productId"
+                        }
+                    }
+                }
+            },
+            "productstate": {
+                "type": "object",
+                "description": "A product's complete state",
+                "properties": {
+                    "class": {
+                        "type": "string",
+                        "description": "The product's asset class"
+                    },
+                    "prefix": {
+                        "type": "string",
+                        "description": "The product's asset class prefix in world state"
+                    },
+                    "assetIDpath": {
+                        "type": "string",
+                        "description": "Qualified property path to the product's ID, declared in the contract code"
+                    },
+                    "AssetKey": {
+                        "type": "string",
+                        "description": "This product's world state product ID"
+                    },
+                    "state": {
+                        "type": "object",
+                        "description": "Properties that have been received or calculated for this product",
+                        "properties": {
+                            "product": {
+                                "$ref": "#/definitions/Model/product"
+                            }
+                        }
+                    },
+                    "eventin": {
+                        "type": "object",
+                        "description": "The contract event that created this state, for example updateAssetContainer",
+                        "properties": {
+                            "product": {
+                                "$ref": "#/definitions/Model/product"
+                            }
+                        }
+                    },
+                    "txnts": {
+                        "type": "string",
+                        "description": "Transaction timestamp matching the blockchain"
+                    },
+                    "txnid": {
+                        "type": "string",
+                        "description": "Transaction UUID matching the blockchain"
+                    },
+                    "eventout": {
+                        "type": "object",
+                        "description": "The chaincode event emitted on invoke exit, if any",
+                        "properties": {
+                            "product": {
+                                "$ref": "#/definitions/Model/eventIOTContractPlatformInvokeResult"
+                            }
+                        }
+                    },
+                    "alerts": {
+                        "$ref": "#/definitions/Model/alertNameArray"
+                    },
+                    "compliant": {
+                        "type": "boolean",
+                        "description": "This product has no active alerts"
+                    }
+                }
+            },
+            "productstateexternal": {
+                "type": "object",
+                "patternProperties": {
+                    "^PROD": {
+                        "type": "object",
+                        "description": "The external state of one product asset, named by its world state ID",
+                        "$ref": "#/definitions/Model/productstate"
+                    }
+                }
+            },
+            "productstatearray": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/definitions/Model/productstateexternal"
+                },
+                "minItems": 0,
+                "description": "Array of product states, can mix asset classes"
+            },
+             "orderId": {
+                "type": "string",
+                "description": "An order's ID"
+            },
+            "order": {
+                "type": "object",
+                "description": "The changeable properties for a order, also considered its 'event' as a partial state",
+                "properties": {
+                    "common": {
+                        "$ref": "#/definitions/Model/ioteventcommon"
+                    },
+                    "orderId": {
+                        "$ref": "#/definitions/Model/orderId"
+                    },
+                    "industryType": {
+                        "type": "string",
+                        "description": "Industry type - to start with Auto / Pharma / Food"
+                    },
+                    "orderType": {
+                        "type": "string",
+                        "description": "Manufacturing / Distribution/MRO"
+                   },
+                   "goodsOrServicesType": {
+                        "type": "string",
+                        "description": "Goods / Services"
+                   },
+                    "orderContentType": {
+                        "type": "string",
+                        "description": "Raw Material/ Component/Subassembly / Finished order"
+                   },
+                    "orderDescription": {
+                        "type": "string",
+                        "description": "Description of the order"
+                    },
+                    "orderStatus": {
+                        "type": "string",
+                        "description": "The current status of the order"
+                    },
+                    "orderFulfilmentLocation": {
+                        "$ref": "#/definitions/Model/geo"
+                    },
+                    "orderDeliveryLocation": {
+                        "$ref": "#/definitions/Model/geo"
+                    },
+                    "orderIssuer": {
+                         "type": "object",
+                         "description": "Order issuer details",
+                        "properties": {
+                            "oderIssuerId": {
+                                "type": "string",
+                                "description": "Participant Id of order issuer"
+                            },
+                            "oderIssuerType": {
+                                "type": "string",
+                                "description": "Participant type of order issuer"
+                            },
+                            "orderIssueDate": {
+                                "type": "string",
+                                "description": "Year of Manufacturing"
+                            },
+                            "orderDueDate": {
+                                "type": "string",
+                                "description": "Order due date"
+                            },
+                            "batchSizeRequired": {
+                                "type": "number",
+                                "description": "Number of assets"
+                            }
+                        },
+                        "minItems": 1
+                    },
+                    "orderDistributor": {
+                        "type": "object",
+                        "description": "Order distributor details",
+                        "properties": {
+                            "distId": {
+                                "type": "string",
+                                "description": "Participant Id of order distributor"
+                            },
+                            "bolId": {
+                                "type": "string",
+                                "description": "Bill of Lading number"
+                            },
+                            "distName": {
+                                "type": "string",
+                                "description": "Participant name of order distributor"
+                            },
+                            "distCheckpoints": {
+                                "type":"array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "checkpointLocation": {
+                                            "$ref": "#/definitions/Model/geo"
+                                        },
+                                        "checkpointName": {
+                                            "type": "string",
+                                            "description": "Checkpoint lat longs of distributor"
+                                        },
+                                        "checkpointDate": {
+                                            "type": "string",
+                                            "description": "Date-time at which the shipment is expected at the checkpoint"
+                                        },
+                                        "checkPointEvents": {
+                                            "type": "string",
+                                            "description": "CheckPoint Events"
+                                        }, 
+                                        "checkPointTemperature": {
+                                            "type": "string",
+                                            "description": "Temperature measured at the checkpoint"
+                                        },
+                                        "checkPointShock": {
+                                            "type": "string",
+                                            "description": "Shock measured at the CheckPoint"
+                                        }
+                                    }
+                                },
+                                "minItems": 0,
+                                "description": "Distribution Checkpoints"
+                            }
+                        },
+                        "minItems": 1
+                    },
+                    "orderFulfiller": {
+                        "type": "object",
+                        "description": "Order fulfiller details",
+                        "properties": {
+                            "Id": {
+                                "type": "string",
+                                "description": "Participant Id of order fulfiller"
+                            },
+                            "Type": {
+                                "type": "string",
+                                "description": "Participant type of order fulfiller"
+                            },
+                            "orderReceivedDate": {
+                                "type": "string",
+                                "description": "Date the order was received"
+                            },
+                            "committedDeliveryDate": {
+                                "type": "string",
+                                "description": "Order due date"
+                            },
+                            "actualFulfilmentDate": {
+                                "type": "string",
+                                "description": "Fulfilment date"
+                            },
+                            "batchSizeDelivered": {
+                                "type": "number",
+                                "description": "Number of assets"
+                            },
+                            "batchIds": {
+                                "type": "string",
+                                "description": "batch ids used to fill order"
+                            }
+                        },
+                        "minItems": 1
+                    }
+                },
+                "required": [
+                    "orderId",
+                    "industryType",
+                    "orderType",
+                    "orderContentType",
+                    "orderStatus",
+                    "orderDescription",
+                    "orderFulfilmentLocation",
+                    "orderDeliveryLocation"
+                ]
+            },
+            "orderKey": {
+                "order": {
+                    "type": "object",
+                    "properties": {
+                        "orderId": {
+                            "$ref": "#/definitions/Model/orderId"
+                        }
+                    }
+                }
+            },
+            "orderstate": {
+                "type": "object",
+                "description": "A order's complete state",
+                "properties": {
+                    "class": {
+                        "type": "string",
+                        "description": "The order's asset class"
+                    },
+                    "prefix": {
+                        "type": "string",
+                        "description": "The order's asset class prefix in world state"
+                    },
+                    "assetIDpath": {
+                        "type": "string",
+                        "description": "Qualified property path to the order's ID, declared in the contract code"
+                    },
+                    "AssetKey": {
+                        "type": "string",
+                        "description": "This order's world state order ID"
+                    },
+                    "state": {
+                        "type": "object",
+                        "description": "Properties that have been received or calculated for this order",
+                        "properties": {
+                            "order": {
+                                "$ref": "#/definitions/Model/order"
+                            }
+                        }
+                    },
+                    "eventin": {
+                        "type": "object",
+                        "description": "The contract event that created this state, for example updateAssetContainer",
+                        "properties": {
+                            "order": {
+                                "$ref": "#/definitions/Model/order"
+                            }
+                        }
+                    },
+                    "txnts": {
+                        "type": "string",
+                        "description": "Transaction timestamp matching the blockchain"
+                    },
+                    "txnid": {
+                        "type": "string",
+                        "description": "Transaction UUID matching the blockchain"
+                    },
+                    "eventout": {
+                        "type": "object",
+                        "description": "The chaincode event emitted on invoke exit, if any",
+                        "properties": {
+                            "order": {
+                                "$ref": "#/definitions/Model/eventIOTContractPlatformInvokeResult"
+                            }
+                        }
+                    },
+                    "alerts": {
+                        "$ref": "#/definitions/Model/alertNameArray"
+                    },
+                    "compliant": {
+                        "type": "boolean",
+                        "description": "This order has no active alerts"
+                    }
+                }
+            },
+            "orderstateexternal": {
+                "type": "object",
+                "patternProperties": {
+                    "^PROD": {
+                        "type": "object",
+                        "description": "The external state of one order asset, named by its world state ID",
+                        "$ref": "#/definitions/Model/orderstate"
+                    }
+                }
+            },
+            "orderstatearray": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/definitions/Model/orderstateexternal"
+                },
+                "minItems": 0,
+                "description": "Array of order states, can mix asset classes"
+            },
+            "supplierId": {
+                "type": "string",
+                "description": "A supplier's ID"
+            },
+            "supplier": {
+                "type": "object",
+                "description": "The changeable properties for a supplier, also considered its 'event' as a partial state",
+                "properties": {
+                    "supplierId": {
+                        "$ref": "#/definitions/Model/supplierId"
+                    },
+                    "industryType": {
+                        "type": "string",
+                        "description": "Industry, to start off with is auto, pharma or food"
+                    },
+                    "makers": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/Model/makerKey"
+                            }
+                        },
+                        "minItems": 1
+                    },
+                    "supplierAddress": {
+                        "description": "The suppliers' physical address and other means of contacting",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "street": {
+                                "type": "string"
+                            },
+                            "city": {
+                                "type": "string"
+                            },
+                            "zipcode": {
+                                "type": "string"
+                            },
+                            "country": {
+                                "type": "string"
+                            },
+                            "phone": {
+                                "type": "string"
+                            },
+                            "website": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    }           
+                },
+                "required": [
+                    "supplierId",
+                    "industryType"
+                ]
+            },
+            "supplierKey": {
+                "supplier": {
+                    "type": "object",
+                    "properties": {
+                        "supplierId": {
+                            "$ref": "#/definitions/Model/supplierId"
+                        }
+                    }
+                }
+            },
+            "supplierstate": {
+                "type": "object",
+                "description": "A supplier's complete state",
+                "properties": {
+                    "class": {
+                        "type": "string",
+                        "description": "The supplier's participant class"
+                    },
+                    "prefix": {
+                        "type": "string",
+                        "description": "The supplier's participant class prefix in world state"
+                    },
+                    "assetIDpath": {
+                        "type": "string",
+                        "description": "Qualified property path to the supplier's ID, declared in the contract code"
+                    },
+                    "AssetKey": {
+                        "type": "string",
+                        "description": "This supplier's world state supplier ID"
+                    },
+                    "state": {
+                        "type": "object",
+                        "description": "Properties that have been received or calculated for this supplier",
+                        "properties": {
+                            "supplier": {
+                                "$ref": "#/definitions/Model/supplier"
+                            }
+                        }
+                    },
+                    "eventin": {
+                        "type": "object",
+                        "description": "The contract event that created this state, for example updateParticipantSupplier",
+                        "properties": {
+                            "supplier": {
+                                "$ref": "#/definitions/Model/supplier"
+                            }
+                        }
+                    },
+                    "txnts": {
+                        "type": "string",
+                        "description": "Transaction timestamp matching the blockchain"
+                    },
+                    "txnid": {
+                        "type": "string",
+                        "description": "Transaction UUID matching the blockchain"
+                    },
+                    "eventout": {
+                        "type": "object",
+                        "description": "The chaincode event emitted on invoke exit, if any",
+                        "properties": {
+                            "supplier": {
+                                "$ref": "#/definitions/Model/eventIOTContractPlatformInvokeResult"
+                            }
+                        }
+                    },
+                    "alerts": {
+                        "$ref": "#/definitions/Model/alertNameArray"
+                    },
+                    "compliant": {
+                        "type": "boolean",
+                        "description": "This supplier has no active alerts"
+                    }
+                }
+            },
+            "supplierstateexternal": {
+                "type": "object",
+                "patternProperties": {
+                    "^SUPR": {
+                        "type": "object",
+                        "description": "The external state of one supplier participant, named by its world state ID",
+                        "$ref": "#/definitions/Model/supplierstate"
+                    }
+                }
+            },
+            "supplierstatearray": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/definitions/Model/supplierstateexternal"
+                },
+                "minItems": 0,
+                "description": "Array of supplier states, can mix participant classes"
+            },
+            "makerId": {
+                    "type": "string",
+                    "description": "A maker's ID"
+                },
+                "maker": {
+                    "type": "object",
+                    "description": "The changeable properties for a maker, also considered its 'event' as a partial state",
+                    "properties": {
+                        "makerId": {
+                            "$ref": "#/definitions/Model/makerId"
+                        },
+                        "industryType": {
+                            "type": "string",
+                            "description": "Industry, to start off with is auto, pharma or food"
+                        },
+                        "suppliers": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "$ref": "#/definitions/Model/supplierKey"
+                                }
+                            },
+                            "minItems": 1
+                        },
+                        "sellers": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "$ref": "#/definitions/Model/sellerKey"
+                                }
+                            },
+                            "minItems": 1
+                        },
+                        "makerAddress": {
+                            "description": "The makers' physical address and other means of contacting",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "street": {
+                                    "type": "string"
+                                },
+                                "city": {
+                                    "type": "string"
+                                },
+                                "zipcode": {
+                                    "type": "string"
+                                },
+                                "country": {
+                                    "type": "string"
+                                },
+                                "phone": {
+                                    "type": "string"
+                                },
+                                "website": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }   
+                    },
+                    "required": [
+                        "makerId",
+                        "industryType"
+                    ]
+                },
+                "makerKey": {
+                    "maker": {
+                        "type": "object",
+                        "properties": {
+                            "makerId": {
+                                "$ref": "#/definitions/Model/makerId"
+                            }
+                        }
+                    }
+                },
+                "makerstate": {
+                    "type": "object",
+                    "description": "A maker's complete state",
+                    "properties": {
+                        "class": {
+                            "type": "string",
+                            "description": "The maker's participant class"
+                        },
+                        "prefix": {
+                            "type": "string",
+                            "description": "The maker's participant class prefix in world state"
+                        },
+                        "assetIDpath": {
+                            "type": "string",
+                            "description": "Qualified property path to the maker's ID, declared in the contract code"
+                        },
+                        "AssetKey": {
+                            "type": "string",
+                            "description": "This maker's world state maker ID"
+                        },
+                        "state": {
+                            "type": "object",
+                            "description": "Properties that have been received or calculated for this maker",
+                            "properties": {
+                                "maker": {
+                                    "$ref": "#/definitions/Model/maker"
+                                }
+                            }
+                        },
+                        "eventin": {
+                            "type": "object",
+                            "description": "The contract event that created this state, for example updateParticipantMaker",
+                            "properties": {
+                                "maker": {
+                                    "$ref": "#/definitions/Model/maker"
+                                }
+                            }
+                        },
+                        "txnts": {
+                            "type": "string",
+                            "description": "Transaction timestamp matching the blockchain"
+                        },
+                        "txnid": {
+                            "type": "string",
+                            "description": "Transaction UUID matching the blockchain"
+                        },
+                        "eventout": {
+                            "type": "object",
+                            "description": "The chaincode event emitted on invoke exit, if any",
+                            "properties": {
+                                "maker": {
+                                    "$ref": "#/definitions/Model/eventIOTContractPlatformInvokeResult"
+                                }
+                            }
+                        },
+                        "alerts": {
+                            "$ref": "#/definitions/Model/alertNameArray"
+                        },
+                        "compliant": {
+                            "type": "boolean",
+                            "description": "This maker has no active alerts"
+                        }
+                    }
+                },
+                "makerstateexternal": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^SUPR": {
+                            "type": "object",
+                            "description": "The external state of one maker participant, named by its world state ID",
+                            "$ref": "#/definitions/Model/makerstate"
+                        }
+                    }
+                },
+                "makerstatearray": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Model/makerstateexternal"
+                    },
+                    "minItems": 0,
+                    "description": "Array of maker states, can mix participant classes"
+                },
+            "sellerId": {
+                    "type": "string",
+                    "description": "A seller's ID"
+                },
+                "seller": {
+                    "type": "object",
+                    "description": "The changeable properties for a seller, also considered its 'event' as a partial state",
+                    "properties": {
+                        "sellerId": {
+                            "$ref": "#/definitions/Model/sellerId"
+                        },
+                        "industryType": {
+                            "type": "string",
+                            "description": "Industry, to start off with is auto, pharma or food"
+                        },
+                        "makers": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "$ref": "#/definitions/Model/makerKey"
+                                    }
+                                },
+                                "minItems": 1
+                        },
+                        "sellerAddress": {
+                            "description": "The sellers' physical address and other means of contacting",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "street": {
+                                    "type": "string"
+                                },
+                                "city": {
+                                    "type": "string"
+                                },
+                                "country": {
+                                    "type": "string"
+                                },
+                                "zipcode": {
+                                    "type": "string"
+                                },
+                                "phone": {
+                                    "type": "string"
+                                },
+                                "website": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }          
+                    },
+                    "required": [
+                        "sellerId",
+                        "industryType"
+                    ]
+                },
+                "sellerKey": {
+                    "seller": {
+                        "type": "object",
+                        "properties": {
+                            "sellerId": {
+                                "$ref": "#/definitions/Model/sellerId"
+                            }
+                        }
+                    }
+                },
+                "sellerstate": {
+                    "type": "object",
+                    "description": "A seller's complete state",
+                    "properties": {
+                        "class": {
+                            "type": "string",
+                            "description": "The seller's participant class"
+                        },
+                        "prefix": {
+                            "type": "string",
+                            "description": "The seller's participant class prefix in world state"
+                        },
+                        "assetIDpath": {
+                            "type": "string",
+                            "description": "Qualified property path to the seller's ID, declared in the contract code"
+                        },
+                        "AssetKey": {
+                            "type": "string",
+                            "description": "This seller's world state seller ID"
+                        },
+                        "state": {
+                            "type": "object",
+                            "description": "Properties that have been received or calculated for this seller",
+                            "properties": {
+                                "seller": {
+                                    "$ref": "#/definitions/Model/seller"
+                                }
+                            }
+                        },
+                        "eventin": {
+                            "type": "object",
+                            "description": "The contract event that created this state, for example updateParticipantSeller",
+                            "properties": {
+                                "seller": {
+                                    "$ref": "#/definitions/Model/seller"
+                                }
+                            }
+                        },
+                        "txnts": {
+                            "type": "string",
+                            "description": "Transaction timestamp matching the blockchain"
+                        },
+                        "txnid": {
+                            "type": "string",
+                            "description": "Transaction UUID matching the blockchain"
+                        },
+                        "eventout": {
+                            "type": "object",
+                            "description": "The chaincode event emitted on invoke exit, if any",
+                            "properties": {
+                                "seller": {
+                                    "$ref": "#/definitions/Model/eventIOTContractPlatformInvokeResult"
+                                }
+                            }
+                        },
+                        "alerts": {
+                            "$ref": "#/definitions/Model/alertNameArray"
+                        },
+                        "compliant": {
+                            "type": "boolean",
+                            "description": "This seller has no active alerts"
+                        }
+                    }
+                },
+                "sellerstateexternal": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^SUPR": {
+                            "type": "object",
+                            "description": "The external state of one seller participant, named by its world state ID",
+                            "$ref": "#/definitions/Model/sellerstate"
+                        }
+                    }
+                },
+                "sellerstatearray": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Model/sellerstateexternal"
+                    },
+                    "minItems": 0,
+                    "description": "Array of seller states, can mix participant classes"
+                }
+        }
+    }
+}
